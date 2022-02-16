@@ -27,7 +27,16 @@ export default class MainScene extends Phaser.Scene {
                 : this.game.config.height * 0.0002;
 
         let bonhomme = this.physics.add.image(this.game.config.width / 2, this.game.config.height - 100, 'bonhomme');
+        bonhomme.setImmovable(true);
         bonhomme.setScale(scaleFruit).setScrollFactor(0);
+        bonhomme.body.gravity.y = 0;
+        this.input.on(
+            'pointermove',
+            function (pointer) {
+                bonhomme.setVelocityX(pointer.x - bonhomme.body.x);
+            },
+            this
+        );
         for (var i = 0; i < 12; i++) {
             var x = Phaser.Math.Between(100, this.game.config.width - 100);
             var y = 0;
